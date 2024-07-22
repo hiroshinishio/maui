@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <link rel="icon" href="data:,">
     <script src="scripts/HybridWebView.js"></script>
     <script>
         window.addEventListener(
@@ -13,11 +14,44 @@
 
                 window.HybridWebView.SendRawMessage('You said: ' + msg)
             });
+
+        // test passing parameters and accepting return values
+        function AddNumbers(a, b) {
+            var result = {
+                "result": a + b,
+                "operationName": "Addition"
+            };
+            return result;
+        }
+
+        // test passing parameters with null and accepting return values
+        function AddNumbersWithNulls(a, null1, b, null2) {
+            var result = {
+                "result": a + b,
+                "operationName": "AdditionWithNulls"
+            };
+            return result;
+        }
+
+        function EvaluateMeWithParamsAndReturn(s1, s2) {
+            return s1 + s2;
+        }
+
+        async function EvaluateMeWithParamsAndAsyncReturn(s1, s2) {
+            const response = await fetch("/asyncdata.json");
+            if (!response.ok) {
+                throw new Error(`HTTP error: ${response.status}`);
+            }
+            const data = await response.json();
+            return data;
+        }
+
     </script>
 </head>
 <body>
     <div>
         Hybrid test!
     </div>
+    <div id="htmlLoaded"></div>
 </body>
 </html>
