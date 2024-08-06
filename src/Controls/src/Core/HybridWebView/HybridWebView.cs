@@ -158,6 +158,7 @@ namespace Microsoft.Maui.Controls
 #else
 		public Task<string?> InvokeJavaScriptAsync(string methodName, object?[]? paramValues = null, object?[]? paramJsonTypeInfos = null)
 		{
+			_invokeTaskId++; // This is to avoid the compiler warning about the field not being used
 			throw new NotImplementedException();
 		}
 #endif
