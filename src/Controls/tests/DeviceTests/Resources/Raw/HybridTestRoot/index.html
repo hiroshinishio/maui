@@ -15,7 +15,13 @@
                 window.HybridWebView.SendRawMessage('You said: ' + msg)
             });
 
-        // test passing parameters and accepting return values
+        // test method invoke with simple parameters and simple return value
+        // test evaluate javascript to invoke
+        function EvaluateMeWithParamsAndReturn(s1, s2) {
+            return s1 + s2;
+        }
+
+        // test method invoke with parameters, and returning complex type
         function AddNumbers(a, b) {
             var result = {
                 "result": a + b,
@@ -24,7 +30,7 @@
             return result;
         }
 
-        // test passing parameters with null and accepting return values
+        // test method invoke with parameters and nulls, and returning complex type
         function AddNumbersWithNulls(a, null1, b, null2) {
             var result = {
                 "result": a + b,
@@ -33,18 +39,19 @@
             return result;
         }
 
-        function EvaluateMeWithParamsAndReturn(s1, s2) {
-            return s1 + s2;
+        // test async method invoke with parameters, and returning complex type
+        async function EvaluateMeWithParamsAndAsyncReturn(s1, s2) {
+            const response = await fetch("/asyncdata.txt");
+            if (!response.ok) {
+                    throw new Error(`HTTP error: ${response.status}`);
+            }
+            var jsonData = await response.json();
+            jsonData[s1] = s2;
+            return jsonData;
         }
 
-        async function EvaluateMeWithParamsAndAsyncReturn(s1, s2) {
-            const response = await fetch("/asyncdata.json");
-            if (!response.ok) {
-                throw new Error(`HTTP error: ${response.status}`);
-            }
-            const data = await response.json();
-            return data;
-        }
+        // test evaluate arbitrary javascript
+        window.TestKey = 'test_value';
 
     </script>
 </head>
